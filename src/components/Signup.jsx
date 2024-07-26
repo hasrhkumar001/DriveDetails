@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import carImage from '../images/banners/signup.jpg'
 
 export const Signup = () => {
   const [formData, setFormData] = useState({
@@ -67,9 +68,9 @@ export const Signup = () => {
         `}
       </style>
 
-      <Container className="py-4">
+      <Container className="py-4 ">
         <Row className="g-0 align-items-center">
-          <Col lg={6} className="mb-5 mb-lg-0">
+          <Col lg={4} className="mb-5 mb-lg-0">
             <Card className="cascading-right bg-body-tertiary" style={{ backdropFilter: 'blur(30px)' }}>
               <Card.Body className="p-5 shadow-5 text-center">
                 <h2 className="fw-bold mb-5">Sign up now</h2>
@@ -144,7 +145,7 @@ export const Signup = () => {
 
           <Col lg={6} className="mb-5 mb-lg-0">
             <img
-              src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
+              src={carImage}
               className="w-100 rounded-4 shadow-4"
               alt="Sign up"
             />
