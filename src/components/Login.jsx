@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeroPages from './HeroPages';
 import axios from 'axios';
+import carImage from '../images/banners/login.jpg';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -40,17 +41,26 @@ export const Login = () => {
 
   return (
     <>
-      <HeroPages name="Login Page" />
-      <section className="vh-100" style={{ backgroundColor: '#508bfc' }}>
+      {/* <HeroPages name="Login Page" /> */}
+      {/* <section className="vh-100" style={{ backgroundColor: '#508bfc' }}> */}
         <Container className="py-5 h-100">
           <Row className="d-flex justify-content-center align-items-center h-100">
-            <Col xs={12} md={8} lg={6} xl={5}>
-              <Card className="shadow-2-strong" style={{ borderRadius: '1rem' }}>
-                <Card.Body className="p-5 text-center">
-                  <h3 className="mb-5">Sign in</h3>
+          <Col lg={6} className="mb-5 mb-lg-0">
+            <img
+              src={carImage}
+              className="w-100 rounded-4 shadow-4"
+              alt="Sign up"
+            />
+          </Col>
+            <Col lg={4} className="mb-5 mb-lg-0">
+              <Card className="shadow-2-strong" style={{ borderRadius: '1rem',  backdropFilter: 'blur(30px)' }}>
+                <Card.Body className="p-5  shadow-5">
+                  <h2 className="mb-5 fw-bold text-center">SIGN IN NOW</h2>
+                  <hr className="my-5" />
                   <Form onSubmit={handleSubmit}>
                     {/* Email input */}
                     <Form.Group className="mb-4">
+                    <label htmlFor="typeEmailX-2" className='fs-3 text-md-start'>Email</label>
                       <Form.Control 
                         type="email" 
                         id="typeEmailX-2" 
@@ -59,12 +69,13 @@ export const Login = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         className="form-control-lg"
                       />
-                      <Form.Label htmlFor="typeEmailX-2">Email</Form.Label>
+                      
                     </Form.Group>
 
                     {/* Password input */}
                     <Form.Group className="mb-4">
-                      <Form.Control 
+                    <label htmlFor="typePasswordX-2 " className='fs-3 text-md-start'>Password</label>
+                      <Form.Control  
                         type="password" 
                         id="typePasswordX-2" 
                         value={password}
@@ -72,30 +83,32 @@ export const Login = () => {
                         placeholder="Password" 
                         className="form-control-lg"
                       />
-                      <Form.Label htmlFor="typePasswordX-2">Password</Form.Label>
+                      
                     </Form.Group>
 
-                    {/* Checkbox */}
-                    <Form.Check 
-                      type="checkbox"
-                      id="form1Example3"
-                      label="Remember password"
-                      className="d-flex justify-content-start mb-4"
-                    />
+                    
+
+                    <div className='fs-4 text-end'>
+                      <p >Don't have an account? <Link to='/signup'>Register</Link></p>
+                    </div>
+
+                    <hr className="my-5" />
 
                     {/* Login button */}
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-center">
                     <Button 
                       variant="primary" 
                       type="submit" 
-                      className="btn-lg btn-block mb-4"
+                      className="btn-lg btn-block  fs-3 "
                     >
                       Login
                     </Button>
-
-                    <hr className="my-4" />
+                    </div>
+{/* 
+                    <hr className="my-4" /> */}
 
                     {/* Social login buttons */}
-                    <Button 
+                    {/* <Button 
                       variant="danger" 
                       type="button" 
                       className="btn-lg btn-block mb-2"
@@ -111,14 +124,15 @@ export const Login = () => {
                       style={{ backgroundColor: '#3b5998' }}
                     >
                       <i className="fab fa-facebook-f me-2"></i> Sign in with Facebook
-                    </Button>
+                    </Button> */}
                   </Form>
                 </Card.Body>
               </Card>
             </Col>
+            
           </Row>
         </Container>
-      </section>
+      {/* </section> */}
     </>
   );
 };
