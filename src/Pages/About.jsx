@@ -19,15 +19,10 @@ function About() {
             />
             <div className="about-main__text">
               <h3>About Company</h3>
-              <h2>You start the engine and your adventure begins</h2>
+              <h2>Discover Your Perfect Car with DriveDetails</h2>
               <p>
-                Certain but she but shyness why cottage. Guy the put instrument
-                sir entreaties affronting. Pretended exquisite see cordially the
-                you. Weeks quiet do vexed or whose. Motionless if no to
-                affronting imprudence no precaution. My indulged as disposal
-                strongly attended.
-              </p>
-              <div className="about-main__text__icons">
+              Welcome to DriveDetails! We specialize in providing comprehensive, up-to-date information on a wide range of vehicles to help you make informed decisions. Our platform allows you to explore detailed specifications, compare different models, and read in-depth reviews from both experts and car enthusiasts. Whether you're looking for the latest electric vehicles, fuel-efficient cars, or luxury models, we have all the details you need. Join us on your car-buying journey and drive with confidence, knowing that you have access to reliable and accurate information right at your fingertips. Drive smarter with DriveDetails! </p>
+              {/* <div className="about-main__text__icons">
                 <div className="about-main__text__icons__box">
                   <img src={Box1} alt="car-icon" />
                   <span>
@@ -49,10 +44,10 @@ function About() {
                     <p>Repair Shop</p>
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
-          <PlanTrip />
+          
         </div>
       </section>
       {/* <div className="book-banner">

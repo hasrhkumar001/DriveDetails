@@ -1,290 +1,131 @@
 import HeroPages from "../components/HeroPages";
-import CarImg1 from "../images/cars-big/audi-box.png";
-import CarImg2 from "../images/cars-big/golf6-box.png";
-import CarImg3 from "../images/cars-big/toyota-box.png";
-import CarImg4 from "../images/cars-big/bmw-box.png";
-import CarImg5 from "../images/cars-big/benz-box.png";
-import CarImg6 from "../images/cars-big/passat-box.png";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
+import { style } from "@mui/system";
 
 function Models() {
+  <HeroPages name="Vehicle Models" />;
+  let [cars, setCars] = useState({});
+  const token = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/cars", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the headers
+          },
+        });
+
+        // Log the response to check its structure
+        // console.log('API Response:', response.data);
+
+        // console.log(response.data.data);
+        setCars(response.data.data);
+      } catch (error) {
+        console.error("Error fetching the cars data:", error);
+      }
+    };
+
+    fetchCars();
+  }, [token]);
+  if (!cars) {
+    return <p>Loading...</p>;
+  }
+
+  const formatValue = (value) => {
+    if (value < 1000) {
+      return value; // No suffix needed for values below 1000
+    }
+
+    const length = value.toString().length;
+
+    if (length > 3 && length <= 5) {
+      return `${(value / 1000).toFixed(1)}K`; // Add 'K' for values above 3 digits and below 5 digits
+    } else if (length > 5 && length <= 7) {
+      return `${(value / 100000).toFixed(1)}L`; // Add 'L' for values above 5 digits and below 7 digits
+    } else if (length > 7) {
+      return `${(value / 10000000).toFixed(1)}C`; // Add 'C' for values above 7 digits
+    }
+
+    return value;
+  };
+
   return (
     <>
+    
       <section className="models-section">
-        <HeroPages name="Vehicle Models" />
+      <HeroPages name="Vehicles" />
         <div className="container">
+        <div className=" d-flex justify-content-between align-items-center px-5 ">
+        <h1
+          className="text-center "
+          style={{
+            fontSize: "4.2rem",
+            fontFamily: "Poppins",
+            fontWeight: 700,
+            color: "#010103",
+            textAlign:"left",
+            marginTop: "90px"
+          }}
+        >
+          
+         {cars.length > 0 ? (cars.length):0} Cars <span style={{ color: "#ff4d30" }}>Found</span>
+        </h1>
+        <div></div>
+        </div>
           <div className="models-div">
-            <div className="models-div__box">
-              <div className="models-div__box__img">
-                <img src={CarImg1} alt="car_img" />
-                <div className="models-div__box__descr">
-                  <div className="models-div__box__descr__name-price">
-                    <div className="models-div__box__descr__name-price__name">
-                      <p>Audi A1</p>
-                      <span>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                      </span>
+            {cars.length > 0 ? ( // Check if cars array has elements
+              cars.map((car) => (
+                <div className="models-div__box" key={car.id}>
+                  <div className="models-div__box__img">
+                    <img
+                      src={`http://127.0.0.1:8000/public/photos/${car.car_img}`}
+                      alt={`${car.car_name}_img` }
+                      style={{objectFit:"contain"}}
+                    />
+                    <div className="models-div__box__descr">
+                      <div className="models-div__box__descr__name-price d-flex justify-content-between align-items-baseline">
+                        <div className="models-div__box__descr__name-price__name">
+                          <p>{car.car_name}</p>
+                        </div>
+                        <div className="models-div__box__descr__name-price__price">
+                          <h4>&#x20b9;{formatValue(car.car_price)}</h4>
+                        </div>
+                      </div>
+                      <div className="models-div__box__descr__name-price__details d-flex justify-content-between align-items-baseline">
+                        <span>&nbsp; {car.transmission_type}</span>
+                        <span style={{ textAlign: "right" }}>
+                          {car.fuel_type} &nbsp;{" "}
+                          <i className="fa-solid fa-car-side"></i>
+                        </span>
+                      </div>
+                      <div className="models-div__box__descr__name-price__btn">
+                        <Link
+                          onClick={() => window.scrollTo(0, 0)}
+                          to={`/cars/${car.id}`}
+                        >
+                          Explore More
+                        </Link>
+                      </div>
                     </div>
-                    <div className="models-div__box__descr__name-price__price">
-                      <h4>$45</h4>
-                      <p>per day</p>
-                    </div>
-                  </div>
-                  <div className="models-div__box__descr__name-price__details">
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Audi
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      4/5 &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Manual
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      Diesel &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                  </div>
-                  <div className="models-div__box__descr__name-price__btn">
-                    <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                    Explore More
-                    </Link>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="models-div__box">
-              <div className="models-div__box__img">
-                <img src={CarImg2} alt="car_img" />
-                <div className="models-div__box__descr">
-                  <div className="models-div__box__descr__name-price">
-                    <div className="models-div__box__descr__name-price__name">
-                      <p>Golf 6</p>
-                      <span>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                      </span>
-                    </div>
-                    <div className="models-div__box__descr__name-price__price">
-                      <h4>$37</h4>
-                      <p>per day</p>
-                    </div>
-                  </div>
-                  <div className="models-div__box__descr__name-price__details">
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; VW
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      4/5 &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Manual
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      Diesel &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                  </div>
-                  <div className="models-div__box__descr__name-price__btn">
-                    <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                    Explore More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="models-div__box">
-              <div className="models-div__box__img">
-                <img src={CarImg3} alt="car_img" />
-                <div className="models-div__box__descr">
-                  <div className="models-div__box__descr__name-price">
-                    <div className="models-div__box__descr__name-price__name">
-                      <p>Toyota</p>
-                      <span>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                      </span>
-                    </div>
-                    <div className="models-div__box__descr__name-price__price">
-                      <h4>$30</h4>
-                      <p>per day</p>
-                    </div>
-                  </div>
-                  <div className="models-div__box__descr__name-price__details">
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Camry
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      4/5 &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Manual
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      Diesel &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                  </div>
-                  <div className="models-div__box__descr__name-price__btn">
-                    <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                    Explore More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="models-div__box">
-              <div className="models-div__box__img">
-                <img src={CarImg4} alt="car_img" />
-                <div className="models-div__box__descr">
-                  <div className="models-div__box__descr__name-price">
-                    <div className="models-div__box__descr__name-price__name">
-                      <p>BMW 320</p>
-                      <span>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                      </span>
-                    </div>
-                    <div className="models-div__box__descr__name-price__price">
-                      <h4>$35</h4>
-                      <p>per day</p>
-                    </div>
-                  </div>
-                  <div className="models-div__box__descr__name-price__details">
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; ModernLine
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      4/5 &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Manual
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      Diesel &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                  </div>
-                  <div className="models-div__box__descr__name-price__btn">
-                    <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                    Explore More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="models-div__box">
-              <div className="models-div__box__img">
-                <img src={CarImg5} alt="car_img" />
-                <div className="models-div__box__descr">
-                  <div className="models-div__box__descr__name-price">
-                    <div className="models-div__box__descr__name-price__name">
-                      <p>Mercedes</p>
-                      <span>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                      </span>
-                    </div>
-                    <div className="models-div__box__descr__name-price__price">
-                      <h4>$50</h4>
-                      <p>per day</p>
-                    </div>
-                  </div>
-                  <div className="models-div__box__descr__name-price__details">
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Benz GLK
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      4/5 &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Manual
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      Diesel &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                  </div>
-                  <div className="models-div__box__descr__name-price__btn">
-                    <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                    Explore More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="models-div__box">
-              <div className="models-div__box__img">
-                <img src={CarImg6} alt="car_img" />
-                <div className="models-div__box__descr">
-                  <div className="models-div__box__descr__name-price">
-                    <div className="models-div__box__descr__name-price__name">
-                      <p>VW Passat</p>
-                      <span>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                        <i className="fa-solid fa-star"></i>
-                      </span>
-                    </div>
-                    <div className="models-div__box__descr__name-price__price">
-                      <h4>$25</h4>
-                      <p>per day</p>
-                    </div>
-                  </div>
-                  <div className="models-div__box__descr__name-price__details">
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; CC
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      4/5 &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                    <span>
-                      <i className="fa-solid fa-car-side"></i> &nbsp; Manual
-                    </span>
-                    <span style={{ textAlign: "right" }}>
-                      Diesel &nbsp; <i className="fa-solid fa-car-side"></i>
-                    </span>
-                  </div>
-                  <div className="models-div__box__descr__name-price__btn">
-                    <Link onClick={() => window.scrollTo(0, 0)} to="/">
-                    Explore More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+              ))
+            ) : (
+              <p
+                className="text-center fs-1 fw-bold"
+                style={{ gridColumn: " 2 / 3" }}
+              >
+                {" "}
+                <CircularProgress style={{ color : "black"}}/>
+                
+              </p>
+            )}
           </div>
         </div>
-        {/* <div className="book-banner">
-          <div className="book-banner__overlay"></div>
-          <div className="container">
-            <div className="text-content">
-              <h2>Book a car by getting in touch with us</h2>
-              <span>
-                <i className="fa-solid fa-phone"></i>
-                <h3>(123) 456-7869</h3>
-              </span>
-            </div>
-          </div>
-        </div> */}
       </section>
     </>
   );

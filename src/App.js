@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import CarDetail from "./Pages/CarDetail";
+import SearchResults from "./Pages/SearchResults";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="car/:id" element={<CarDetail />} />
+        <Route path="cars/:id" element={<CarDetail />} />
+        <Route path="/search-results" element={<SearchResults />} />
       </Routes>
       <Footer />
     </>

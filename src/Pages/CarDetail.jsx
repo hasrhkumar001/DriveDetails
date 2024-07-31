@@ -1,69 +1,105 @@
 // src/CarDetail.js
-import React from 'react';
+
 import { useParams } from 'react-router-dom';
+import HeroPages from "../components/HeroPages";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, List, ListItem } from '@mui/material';
 
 const CarDetail = () => {
-    const { id } = useParams(); // Assuming you're using React Router and `id` is the car's identifier.
+    let [cars, setCars] = useState({});
+    const { id } = useParams();
+    const token = localStorage.getItem("authToken");
+  
+    useEffect(() => {
+      const fetchCars = async () => {
+        try {
+          const response = await axios.get(`http://127.0.0.1:8000/api/cars/${id}`);
+  
+          // Log the response to check its structure
+          // console.log('API Response:', response.data);
+  
+          const allCars = response.data.data;
+  
+          // Sort by creation date or any other relevant field if necessary
+          // If the API already sorts the cars, you can directly slice the array
+          // allCars.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  
+          // Slice to get only the most recent 6 cars
+          
+  
+          // console.log(response.data.data);
+          setCars(allCars);
+        } catch (error) {
+          console.error("Error fetching the cars data:", error);
+        }
+      };
+  
+      fetchCars();
+    }, [id]);
+    
+  
 
-    // Example car data (in a real app, you'd fetch this data from an API)
-    const car = {
-        id: id,
-        make: 'Tesla',
-        model: 'Model S',
-        year: 2022,
-        price: '$80,000',
-        description: 'The Tesla Model S is an all-electric luxury sedan with impressive performance and cutting-edge technology.',
-        features: [
-            'Electric',
-            'Autopilot',
-            'Long Range Battery',
-            'High Performance'
-        ],
-        image: './images/cars-big/benz.jpg'
-    };
+    const formatMileage = (mileage, fuelType) => {
+        if (fuelType === 'PETROL' || fuelType === 'DIESEL') {
+          return `${mileage} Kmpl`;
+        } else if (fuelType === 'ELECTRIC') {
+          return `${mileage} Km`;
+        }
+        return mileage;
+      };
+    
+    const formatEngineCapacity = (engineCapacity, fuelType) => {
+        if (fuelType === 'PETROL' || fuelType === 'DIESEL') {
+          return `${engineCapacity} cc`;
+        } else if (fuelType === 'ELECTRIC') {
+          return `${engineCapacity} KWh`;
+        }
+        return engineCapacity;
+      };
 
     return (
         <Container sx={{ mt: 5 }}>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} className="d-flex align-items-center">
                 <Grid item md={6}>
-                    <Card>
+                    
                         <CardMedia
                             component="img"
-                            height="200"
-                            image={car.image}
-                            alt={`${car.make} ${car.model}`}
+                            
+                            image={`http://127.0.0.1:8000/public/photos/${cars.car_img}`}
+                            
                         />
-                        <CardContent>
-                            <Typography variant="h3" component="div">
-                                {car.make} {car.model}
-                            </Typography>
-                            <Typography variant="h6" color="text.secondary" gutterBottom>
-                                {car.year}
-                            </Typography>
-                            <Typography variant="h4" paragraph>
-                                <strong>Price:</strong> {car.price}
-                            </Typography>
-                            <Typography variant="h5" paragraph>
-                                {car.description}
-                            </Typography>
-                            <Button variant="contained" color="primary">Contact Seller</Button>
-                        </CardContent>
-                    </Card>
+                        
+                   
                 </Grid>
                 <Grid item md={6}>
                     <Card>
                         <CardContent>
-                            <Typography variant="h2" component="div">
-                                Features
+                            <Typography variant="h3" component="div">
+                            {cars.brand_name} {cars.car_name}  
+                                </Typography>
+                            <Typography variant="h6" color="text.secondary" gutterBottom>
+                            {cars.model_year}
                             </Typography>
-                            <List >
-                                {car.features.map((feature, index) => (
-                                    <ListItem key={index} >
-                                        {feature}
-                                    </ListItem>
-                                ))}
-                            </List>
+                            <Typography variant="h4" paragraph>
+                                <strong>Price:</strong> {cars.car_price}
+                            </Typography>
+                            <Typography variant="h4" paragraph>
+                                <strong>Transmission type:</strong> {cars.transmission_type}
+                            </Typography>
+                            <Typography variant="h4" paragraph>
+                                <strong>Mileage:</strong> {formatMileage(cars.car_mileage, cars.fuel_type)}
+                            </Typography>
+                            <Typography variant="h4" paragraph>
+                                <strong>Fuel type:</strong> {cars.fuel_type}
+                            </Typography>
+                            <Typography variant="h4" paragraph>
+                                <strong>Engine:</strong> {formatEngineCapacity(cars.engine_capacity, cars.fuel_type)}
+                            </Typography>
+                            <Typography variant="h5" paragraph>
+                                {cars.car_desc}
+                            </Typography>
                         </CardContent>
                     </Card>
                 </Grid>

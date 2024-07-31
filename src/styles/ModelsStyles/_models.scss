@@ -26,6 +26,7 @@
     border-radius: 0.3rem;
     display: flex;
     width: 35rem;
+    height: 65rem;
     flex-direction: column;
 
     @media (max-width: 400px) {
@@ -34,13 +35,16 @@
     }
 
     &__img {
-      width: 100%;
-      height: auto;
+      // width: 100%;
+      // height: auto;
+      
       border-radius: 0.3rem;
 
       img {
         width: 100%;
+        
         height: 27rem;
+        
       }
     }
 

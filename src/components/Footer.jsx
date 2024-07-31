@@ -6,11 +6,10 @@ function Footer() {
           <div className="footer-content">
             <ul className="footer-content__1">
               <li>
-                <span>CAR</span> Rental
+                <span>Drive</span>Details
               </li>
               <li>
-                We offers a big range of vehicles for all your driving needs. We
-                have the perfect car to meet your needs.
+              Discover comprehensive information about cars, right at your fingertips.
               </li>
               <li>
                 <a href="tel:123456789">
@@ -21,10 +20,10 @@ function Footer() {
               <li>
                 <a
                   href="mailto: 
-                carrental@gmail.com"
+                abc@gmail.com"
                 >
                   <i className="fa-solid fa-envelope"></i>
-                  &nbsp; calebjephuneh@gmail.com
+                  &nbsp; drivedetails@gmail.com
                 </a>
               </li>
 
@@ -33,43 +32,32 @@ function Footer() {
                   style={{ fontSize: "14px" }}
                   target="_blank"
                   rel="noreferrer"
-                  href="https://jephunneh.com/"
+                  href="#"
                 >
-                  Design by cjephuneh
+                  Design by Harsh Kumar
                 </a>
               </li>
             </ul>
 
             <ul className="footer-content__2">
-              <li>Company</li>
-              <li>
-                <a href="#home">New York</a>
-              </li>
-              <li>
-                <a href="#home">Careers</a>
-              </li>
-              <li>
-                <a href="#home">Mobile</a>
-              </li>
-              <li>
-                <a href="#home">Blog</a>
-              </li>
-              <li>
-                <a href="#home">How we work</a>
-              </li>
+              <li>Popular Brands</li>
+              <li>Tata</li>
+              <li>Mahindra</li>
+              <li>Hyundai</li>
+              <li>kia</li>
             </ul>
 
             <ul className="footer-content__2">
-              <li>Working Hours</li>
-              <li>Mon - Fri: 9:00AM - 9:00PM</li>
-              <li>Sat: 9:00AM - 19:00PM</li>
-              <li>Sun: Closed</li>
+              <li>Popular fuels</li>
+              <li>Petrol</li>
+              <li>Diesel</li>
+              <li>Electric</li>
             </ul>
 
             <ul className="footer-content__2">
-              <li>Subscription</li>
+              <li>Share Your Feedback</li>
               <li>
-                <p>Subscribe your Email address for latest news & updates.</p>
+                <p>We value your insights to help us improve our service.</p>
               </li>
               <li>
                 <input type="email" placeholder="Enter Email Address"></input>

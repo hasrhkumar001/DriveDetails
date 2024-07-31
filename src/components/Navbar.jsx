@@ -75,7 +75,7 @@ function Navbar() {
             <li>
               {" "}
               <Link className="models-link" to="/cars">
-                Vehicle Models
+                Vehicles
               </Link>
             </li>
             {/* <li>

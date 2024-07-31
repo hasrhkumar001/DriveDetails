@@ -2,13 +2,14 @@
 
 .book-section {
   position: relative;
-
+  padding-top: 50px ;
   background: linear-gradient(to bottom, $bg-gray 20%, $bg-white 80%);
 }
 
 .book-content {
   margin: 0 auto;
   margin-bottom: 10rem;
+ 
 
   &__box {
     background-color: $bg-white;
