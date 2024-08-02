@@ -70,7 +70,7 @@ export const Signup = () => {
       <Container className="py-5 h-100 ">
         <Row className="d-flex h-100 align-items-center justify-content-center ">
           <Col lg={4} className="mb-5 mb-lg-0 ">
-            <Card className="shadow-2-strong" style={{ backdropFilter: 'blur(30px)',  borderRadius: '1rem' }}>
+            <Card className="shadow" style={{ backdropFilter: 'blur(30px)',  borderRadius: '1rem' }}>
               <Card.Body className="p-5 shadow-5 ">
                 <h2 className="fw-bold  text-center">SIGN UP NOW</h2>
                 <hr className="my-5" />

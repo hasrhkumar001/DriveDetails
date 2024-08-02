@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
 import Logo from "../images/logo/logo.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "./AuthContext";
+
 
 function Navbar() {
+  const { authToken, user, logout } = useContext(AuthContext);
   const [nav, setNav] = useState(false);
 
   const openNav = () => {
     setNav(!nav);
   };
 
+  
   return (
     <>
       <nav>
@@ -98,12 +102,21 @@ function Navbar() {
             </li>
           </ul>
           <div className="navbar__buttons">
+          {authToken ?(<>
+            <Link className="navbar__buttons__sign-in" to="/profile">
+              Profile
+            </Link>
+            <Link className="navbar__buttons__register" onClick={logout} to="/login">
+              Logout
+            </Link>
+            </> ) : (<>
             <Link className="navbar__buttons__sign-in" to="/login">
               Sign In
             </Link>
             <Link className="navbar__buttons__register" to="/signup">
               Register
             </Link>
+            </> )}
           </div>
 
           {/* mobile */}

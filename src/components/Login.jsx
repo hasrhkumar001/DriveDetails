@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button, Col, Row, Container, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeroPages from './HeroPages';
 import axios from 'axios';
 import carImage from '../images/banners/login.jpg';
+import { AuthContext } from './AuthContext';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Initialize navigate
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
        await axios.post('http://127.0.0.1:8000/api/auth/login', { email, password }).then((res)=>{
-        console.log("Response", res?.data);
+        
 
         if (res.status === 200) {
-          // Assuming the token is returned in response.data.token
-          localStorage.setItem('authToken', res?.data.access_token); // Store token in local storage
+          
+          const { access_token, user } = res.data;
+          login(access_token, user);
+          
         
           console.log('Login successfully');
           navigate('/'); // Redirect to the home page
+          // 
         } else {
           console.log('User does not exist');
           setMessage('Invalid credentials. Please try again.');
@@ -53,7 +58,7 @@ export const Login = () => {
             />
           </Col>
             <Col lg={4} className="mb-5 mb-lg-0">
-              <Card className="shadow-2-strong" style={{ borderRadius: '1rem',  backdropFilter: 'blur(30px)' }}>
+              <Card className=" shadow" style={{ borderRadius: '1rem',  backdropFilter: 'blur(30px)' }}>
                 <Card.Body className="p-5  shadow-5">
                   <h2 className="mb-5 fw-bold text-center">SIGN IN NOW</h2>
                   <hr className="my-5" />
@@ -86,7 +91,9 @@ export const Login = () => {
                       
                     </Form.Group>
 
-                    
+                    <div className='fs-4 text-end'>
+                      <p >Forget Password? <Link to='/forget-password'>Click here</Link></p>
+                    </div>
 
                     <div className='fs-4 text-end'>
                       <p >Don't have an account? <Link to='/signup'>Register</Link></p>

@@ -72,7 +72,8 @@ const SearchResults = () => {
               </div>
             ))
           ) : (
-            <Typography variant="h6">No results found</Typography>
+            <Typography className="text-center fs-1 fw-bold"
+            style={{ gridColumn: " 2 / 3" }} variant="h6">No results found</Typography>
           )}
         </div>
       </Container>
