@@ -61,7 +61,7 @@ export const ResetPassword = () => {
             />
           </Col>
           <Col lg={4} className="mb-5 mb-lg-0">
-            <Card className="shadow-2-strong" style={{ borderRadius: '1rem', backdropFilter: 'blur(30px)' }}>
+            <Card className="shadow" style={{ borderRadius: '1rem', backdropFilter: 'blur(30px)' }}>
               <Card.Body className="p-5 shadow-5">
                 <h2 className="mb-5 fw-bold text-center">RESET PASSWORD NOW</h2>
                 <hr className="my-5" />
@@ -74,7 +74,7 @@ export const ResetPassword = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Password" 
-                      className="form-control-lg"
+                      className="form-control-lg mt-2"
                     />
                   </Form.Group>
                   <Form.Group className="mb-4">
@@ -85,7 +85,7 @@ export const ResetPassword = () => {
                       value={password_confirmation}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Confirm Password" 
-                      className="form-control-lg"
+                      className="form-control-lg mt-2"
                     />
                   </Form.Group>
                   <hr className="my-5" />
@@ -93,7 +93,8 @@ export const ResetPassword = () => {
                     <Button 
                       variant="primary" 
                       type="submit" 
-                      className="btn-lg btn-block fs-3 "
+                      style={{backgroundColor: "#ff4d30" ,border:"none" ,fontWeight:"700"}}
+                      className="btn-lg btn-block w-100 fs-3 py-3 "
                     >
                       Change Password
                     </Button>

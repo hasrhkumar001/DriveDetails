@@ -16,6 +16,7 @@ import ProfileDetails from "./Pages/ProfileDetails";
 import { AuthProvider } from "./components/AuthContext";
 
 
+
 function App() {
   return (
     <>

@@ -36,8 +36,8 @@ export const ForgetPassword = () => {
               alt="Reset Password"
             />
           </Col>
-          <Col lg={4} className="mb-5 mb-lg-0">
-            <Card className="shadow-2-strong" style={{ borderRadius: '1rem', backdropFilter: 'blur(30px)' }}>
+          <Col lg={4} className="mb-5 mb-lg-0 ">
+            <Card className="shadow" style={{ borderRadius: '1rem', backdropFilter: 'blur(30px)' }}>
               <Card.Body className="p-5 shadow-5">
                 <h2 className="mb-5 fw-bold text-center">FORGOT PASSWORD</h2>
                 <hr className="my-5" />
@@ -50,7 +50,7 @@ export const ForgetPassword = () => {
                       placeholder="Email" 
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="form-control-lg"
+                      className="form-control-lg mt-2"
                       required
                     />
                     {message && <p className="text-success mt-3">{message}</p>}
@@ -62,7 +62,8 @@ export const ForgetPassword = () => {
                     <Button 
                       variant="primary" 
                       type="submit" 
-                      className="btn-lg btn-block fs-3 "
+                      style={{backgroundColor: "#ff4d30" ,border:"none" ,fontWeight:"700"}}
+                      className="btn-lg btn-block w-100 fs-3 py-3 "
                     >
                       Reset
                     </Button>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "../images/logo/logo.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { Dropdown } from 'react-bootstrap';
 
 
 function Navbar() {
@@ -103,12 +104,28 @@ function Navbar() {
           </ul>
           <div className="navbar__buttons">
           {authToken ?(<>
-            <Link className="navbar__buttons__sign-in" to="/profile">
-              Profile
-            </Link>
-            <Link className="navbar__buttons__register" onClick={logout} to="/login">
-              Logout
-            </Link>
+            <Dropdown className="">
+              <Dropdown.Toggle className="d-flex align-items-center" style={{backgroundColor: "#ff4d30" ,border:"none" ,color: "white",padding: "1.5rem 2.6rem", borderRadius: "3px",
+              boxShadow: "0 5px 10px 0 rgba(255, 83, 48, 0.35)", transition: "all 0.3s",fontSize: "1.6rem",fontFamily: "Rubik" ,fontWeight: "500"}} >
+                <i class='bx bxs-user-circle fs-1 mx-2'></i>
+                <>{user.name}</>
+
+              </Dropdown.Toggle>
+              <Dropdown.Menu className=" fs-4  mx-auto " align={{ lg: 'end' }} style={{width:"10px", borderRadius:"0", }}>
+                    <div >
+                    <Dropdown.Item className=" text-center " style={{borderBottom:"1px solid #dfdfdf"}}>
+                      <Link className="text-dark" to="/profile">
+                        Profile
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item className=" text-center ">
+                      <Link className="text-dark" onClick={logout} to="/login">
+                        Logout
+                      </Link>
+                    </Dropdown.Item>
+                    </div>
+                  </ Dropdown.Menu>
+            </Dropdown>
             </> ) : (<>
             <Link className="navbar__buttons__sign-in" to="/login">
               Sign In

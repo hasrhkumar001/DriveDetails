@@ -76,7 +76,7 @@ function Models() {
         </h1>
         <div></div>
         </div>
-          <div className="models-div">
+          <div className="models-div  align-items-stretch ">
             {cars.length > 0 ? ( // Check if cars array has elements
               cars.map((car) => (
                 <div className="models-div__box" key={car.id}>
@@ -88,11 +88,11 @@ function Models() {
                     />
                     <div className="models-div__box__descr">
                       <div className="models-div__box__descr__name-price d-flex justify-content-between align-items-baseline">
-                        <div className="models-div__box__descr__name-price__name">
-                          <p>{car.car_name}</p>
+                        <div className="models-div__box__descr__name-price__name ">
+                          <p className="fs-1">{car.brand} {car.car_name}</p>
                         </div>
-                        <div className="models-div__box__descr__name-price__price">
-                          <h4>&#x20b9;{formatValue(car.car_price)}</h4>
+                        <div className="models-div__box__descr__name-price__price ">
+                          <h4 className="fs-1 fw-bold">&#x20b9;{formatValue(car.car_price)}</h4>
                         </div>
                       </div>
                       <div className="models-div__box__descr__name-price__details d-flex justify-content-between align-items-baseline">
@@ -102,14 +102,16 @@ function Models() {
                           <i className="fa-solid fa-car-side"></i>
                         </span>
                       </div>
-                      <div className="models-div__box__descr__name-price__btn">
-                        <Link
+                      <Link className="text-white text-decoration-none fw-bold"
                           onClick={() => window.scrollTo(0, 0)}
                           to={`/cars/${car.id}`}
                         >
+                      <div className="models-div__box__descr__name-price__btn">
+                        
                           Explore More
+                          </div>
                         </Link>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>

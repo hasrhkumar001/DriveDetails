@@ -6,6 +6,8 @@ import HeroPages from './HeroPages';
 import axios from 'axios';
 import carImage from '../images/banners/login.jpg';
 import { AuthContext } from './AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +15,8 @@ export const Login = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Initialize navigate
   const { login } = useContext(AuthContext);
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,6 +48,29 @@ export const Login = () => {
     }
   };
 
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const token = credentialResponse.credential;
+      
+      const userData = jwtDecode(token);
+      console.log(userData);
+      // Send token to your backend for verification and user creation
+      const res = await axios.post('http://127.0.0.1:8000/api/auth/google', { userData });
+
+      if (res.status === 200) {
+        const { access_token, user } = res.data;
+        login(access_token, user);
+        navigate('/');
+      } else {
+        console.log('User creation or login failed');
+        setMessage('Failed to authenticate with Google. Please try again.');
+      }
+    } catch (error) {
+      console.error('Google login error:', error);
+      setMessage('An error occurred with Google login. Please try again.');
+    }
+  };
+
   return (
     <>
       {/* <HeroPages name="Login Page" /> */}
@@ -60,8 +87,9 @@ export const Login = () => {
             <Col lg={4} className="mb-5 mb-lg-0">
               <Card className=" shadow" style={{ borderRadius: '1rem',  backdropFilter: 'blur(30px)' }}>
                 <Card.Body className="p-5  shadow-5">
-                  <h2 className="mb-5 fw-bold text-center">SIGN IN NOW</h2>
-                  <hr className="my-5" />
+                  <h2 className="mb-5 fw-bold text-center ">SIGN IN </h2>
+                  
+                  
                   <Form onSubmit={handleSubmit}>
                     {/* Email input */}
                     <Form.Group className="mb-4">
@@ -72,7 +100,7 @@ export const Login = () => {
                         placeholder="Email" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="form-control-lg"
+                        className="form-control-lg mt-2"
                       />
                       
                     </Form.Group>
@@ -86,30 +114,49 @@ export const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password" 
-                        className="form-control-lg"
+                        className="form-control-lg mt-2"
                       />
-                      
+                   
                     </Form.Group>
+                    
+                    
+                      <div className='fs-4 text-end mb-4 '>
+                        <p >Forget Password? <Link className='text-decoration-none' style={{color: "#ff4d30"}} to='/forget-password'>Click here</Link></p>
+                      </div>
 
-                    <div className='fs-4 text-end'>
-                      <p >Forget Password? <Link to='/forget-password'>Click here</Link></p>
-                    </div>
-
-                    <div className='fs-4 text-end'>
-                      <p >Don't have an account? <Link to='/signup'>Register</Link></p>
-                    </div>
-
-                    <hr className="my-5" />
+                      
+                    
+                    
+                    
+                    
 
                     {/* Login button */}
                     <div className="d-grid gap-2 d-md-flex justify-content-md-center">
                     <Button 
                       variant="primary" 
                       type="submit" 
-                      className="btn-lg btn-block  fs-3 "
+                      style={{backgroundColor: "#ff4d30" ,border:"none" ,fontWeight:"700"}}
+                      className="btn-lg btn-block w-100 fs-3 py-3 "
                     >
                       Login
                     </Button>
+                    
+                    </div>
+                    <div className='fs-4 my-4 text-center'>
+                        <p > Don't have an account? <Link className='text-decoration-none' style={{color: "#ff4d30"}} to='/signup'>Register</Link></p>
+                      </div>
+                    <div className='d-flex my-4 justify-content-center align-items-baseline text-secondary' >
+                      <hr className='w-25'/>
+                      <p className='text-center fw-bold mx-2 '>Or</p>
+                      <hr className='w-25'/>
+                    </div>
+                    <div className='d-flex justify-content-center mb-3 '>
+                      <GoogleLogin
+                    onSuccess={handleGoogleLogin}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                    />;
                     </div>
 {/* 
                     <hr className="my-4" /> */}

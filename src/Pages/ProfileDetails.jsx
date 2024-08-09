@@ -1,9 +1,10 @@
 // ProfilePage.js
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Card, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const ProfileDetails = () => {
-  const [userData, setUserData] = useState({ name: '', email: '' });
+  const [userData, setUserData] = useState({ name: '', email: '',password: '' });
 
   useEffect(() => {
     // Retrieve user data from local storage
@@ -20,12 +21,29 @@ const ProfileDetails = () => {
       [name]: value
     }));
   };
-  console.log(userData)
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) =>{
     e.preventDefault();
-    // Handle profile update logic here
-    console.log('Updated user data:', userData);
+    try {
+     const token = localStorage.getItem('authToken');
+
+     
+     const response = await axios.put('http://127.0.0.1:8000/api/user/profile', userData, {
+       headers: {
+         'Authorization': `Bearer ${token}`, 
+         'Content-Type': 'application/json',
+       }
+      
+     });
+
+     
+     localStorage.setItem('user', JSON.stringify(userData)); 
+
+   } catch (err) {
+     console.log(err.response?.data?.message || 'An error occurred while updating the profile.');
+   }
+    
   };
 
   return (
@@ -43,7 +61,7 @@ const ProfileDetails = () => {
                   <Form.Control
                     type="text"
                     name="name"
-                    placeholder="Enter your name"
+                    placeholder="Enter New name"
                     value={userData.name}
                     className='fs-3 text-secondary'
                     onChange={handleChange}
@@ -55,8 +73,20 @@ const ProfileDetails = () => {
                   <Form.Control
                     type="email"
                     name="email"
-                    placeholder="Enter your email"
+                    placeholder=""
+                    disabled
                     value={userData.email}
+                    className='fs-3 text-secondary'
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formPassword" className="mt-3">
+                  <Form.Label className='fs-2'>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    placeholder="Enter New Password"
+                    
                     className='fs-3 text-secondary'
                     onChange={handleChange}
                   />
