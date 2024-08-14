@@ -6,8 +6,8 @@ import BookCar from '../components/BookCar';
 const SearchResults = () => {
   const location = useLocation();
   const { cars } = location.state || { cars: [] };
-  console.log(cars);
-  console.log('Location state:', location.state.data);
+  
+  
 
   return (
     <div>

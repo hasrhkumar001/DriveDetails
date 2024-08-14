@@ -18,15 +18,17 @@ function BookCar() {
     e.preventDefault();
 
     const newErrors = {};
-    if (!fuelType) newErrors.fuelType = 'Fuel type is required';
-    if (!engineCapacity) newErrors.engineCapacity = 'Engine capacity is required';
-    if (!mileage) newErrors.mileage = 'Mileage is required';
-    if (!priceRange) newErrors.priceRange = 'Price range is required';
-    if (!brand) newErrors.brand = 'Brand is required';
+    
+    // Check if all fields are empty
+    if (!fuelType && !engineCapacity && !mileage && !priceRange && !brand) {
+        newErrors.general = 'Please select at least one filter option.';
+       
+    }
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
+        setErrors(newErrors);
+        
+        return;
     }
 
     try {
@@ -56,12 +58,15 @@ function BookCar() {
         <div className="container">
           <div className="book-content">
             <div className="book-content__box">
-              <h2>Search a car</h2>
+              <h2>Search Car <span className='text-secondary fs-5'>(select atleast 1 option)</span></h2>
 
               <form className="box-form" onSubmit={handleSearch}>
+                
+                 
+                
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-car"></i> &nbsp; Select Fuel Type <b>*</b>
+                    <i className="fa-solid fa-car"></i> &nbsp; Select Fuel Type <b></b>
                   </label>
                   <select value={fuelType} onChange={(e) => setFuelType(e.target.value)}>
                     <option value="">Select Fuel type</option>
@@ -74,7 +79,7 @@ function BookCar() {
 
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Engine/Motor Capacity <b>*</b>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Engine/Motor Capacity <b></b>
                   </label>
                   <select value={engineCapacity} onChange={(e) => setEngineCapacity(e.target.value)}>
                     {fuelType === 'ELECTRIC' ? (
@@ -100,7 +105,7 @@ function BookCar() {
 
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Mileage/Range <b>*</b>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Mileage/Range <b></b>
                   </label>
                   <select value={mileage} onChange={(e) => setMileage(e.target.value)}>
                   {fuelType !== 'ELECTRIC' ? (
@@ -130,7 +135,7 @@ function BookCar() {
 
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Price Range <b>*</b>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Price Range <b></b>
                   </label>
                   <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)}>
                     <option value="">Select Price Range</option>
@@ -151,7 +156,7 @@ function BookCar() {
 
                 <div className="box-form__car-type">
                   <label>
-                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Car Brand <b>*</b>
+                    <i className="fa-solid fa-location-dot"></i> &nbsp; Select Car Brand <b></b>
                   </label>
                   <select value={brand} onChange={(e) => setBrand(e.target.value)}>
                     <option value="">Select Car brand</option>

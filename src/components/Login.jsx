@@ -59,6 +59,8 @@ export const Login = () => {
 
       if (res.status === 200) {
         const { access_token, user } = res.data;
+        console.log(res.data);
+        console.log(`Access Token : ${access_token}, Data : ${user}`);
         login(access_token, user);
         navigate('/');
       } else {

@@ -1,10 +1,12 @@
 // ProfilePage.js
-import React, { useState, useEffect } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { Container, Row, Col, Form, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
+import {AuthContext} from '../components/AuthContext';
 
 const ProfileDetails = () => {
   const [userData, setUserData] = useState({ name: '', email: '',password: '' });
+  const { update } = useContext(AuthContext);
 
   useEffect(() => {
     // Retrieve user data from local storage
@@ -36,9 +38,10 @@ const ProfileDetails = () => {
        }
       
      });
-
      
-     localStorage.setItem('user', JSON.stringify(userData)); 
+     update(userData);
+     
+     
 
    } catch (err) {
      console.log(err.response?.data?.message || 'An error occurred while updating the profile.');

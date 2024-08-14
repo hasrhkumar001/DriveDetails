@@ -2078,3 +2078,18 @@ footer {
   box-shadow: 0 10px 15px 0 rgba(255, 83, 48, 0.6);
   background-color: #fa4226;
 }/*# sourceMappingURL=styles.css.map */
+
+.star-rating {
+  display: flex;
+  font-size: 3.6rem;
+  cursor: pointer;
+}
+
+.star {
+  color: #d3d3d3; /* Grey color for unfilled stars */
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: #ff4d30; /* Color for filled stars */
+}

@@ -7,13 +7,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, List, ListItem } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import Review from '../components/Review';
+import CarModelDropdown from '../components/CarModelDropdown';
 
 const CarDetail = () => {
     let [cars, setCars] = useState({});
     const { id } = useParams();
     const token = localStorage.getItem("authToken");
     const [loading, setLoading] = useState(true);
-  
+    const [reviews, setReviews] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
+    
     useEffect(() => {
       const fetchCars = async () => {
         try {
@@ -27,14 +31,7 @@ const CarDetail = () => {
   
           const allCars = response.data.data;
   
-          // Sort by creation date or any other relevant field if necessary
-          // If the API already sorts the cars, you can directly slice the array
-          // allCars.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  
-          // Slice to get only the most recent 6 cars
           
-  
-          // console.log(response.data.data);
           setCars(allCars);
         } catch (error) {
           console.error("Error fetching the cars data:", error);
@@ -43,8 +40,33 @@ const CarDetail = () => {
       };
   
       fetchCars();
+      fetchReviews();
+     
+      
     }, [id]);
+
     
+    
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/cars/${id}/reviews`);
+        
+        calculateAverageRating(response.data);
+        setReviews(response.data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+  
+    const calculateAverageRating = (reviews) => {
+      if (reviews.length === 0) {
+        setAverageRating(0);
+      } else {
+        const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+        const average = total / reviews.length;
+        setAverageRating(average.toFixed(1)); // round to 1 decimal place
+      }
+    };
   
 
     const formatMileage = (mileage, fuelType) => {
@@ -64,6 +86,9 @@ const CarDetail = () => {
         }
         return engineCapacity;
       };
+      const handleModelSelect = (selectedModel) => {
+        setCars(selectedModel);
+    };
 
     return (
         <Container sx={{ mt: 5 }}>
@@ -83,7 +108,7 @@ const CarDetail = () => {
                         <CardMedia
                             component="img"
                             
-                            image={`http://127.0.0.1:8000/public/photos/${cars.car_img}`}
+                            image={`http://127.0.0.1:8000/public/photos/${cars.car ? cars.car.car_img : cars.car_img}`}
                             
                         />
                         
@@ -94,9 +119,18 @@ const CarDetail = () => {
                         <CardContent style={{fontFamily: "Poppins"}}>
                             <Typography variant="h2" component="div" style={{ fontWeight :"700"}} className='d-flex align-items-end justify-content-between mb-3'>
                               <div>{cars.brand_name} <span style={{color: "#ff4d30"}} >{cars.car_name}</span></div>  <Typography variant="h4" color="text.secondary" gutterBottom>
-                             {cars.model_year}
+                              <CarModelDropdown  carId={cars.id} onSelectModel={handleModelSelect} />
                             </Typography>
+                            {/* Display Average Rating */}
+                            
                                 </Typography>
+                                <h3 className='d-flex align-items-baseline' style={{ fontSize: "1.4rem", fontFamily: "Poppins", marginTop: "20px" }}>
+                                <i className={`bx bxs-star`}
+                                  style={{ color: '#ff4d30', fontSize: '1.4rem' }}
+                                ></i>{averageRating}
+                              <span style={{ marginLeft: "10px" }}>({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})
+                              </span>
+                            </h3>
                                 <hr />
                                 
                             
@@ -126,9 +160,24 @@ const CarDetail = () => {
                             </Typography>
                         </CardContent>
                     </Card>
+                    
                 </Grid>
+                <Grid item md={12}>
+                    
+                    </Grid>
+                    <Grid item md={12}>
+                    
+                    </Grid>
+                <Container>
+                    <Grid item md={12}>
+                    <Review carId={cars.id} />
+                    </Grid>
+                </Container>
+                
             </Grid>
+            
             )}
+
         </Container>
     );
 };
