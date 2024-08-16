@@ -2093,3 +2093,33 @@ footer {
 .star.filled {
   color: #ff4d30; /* Color for filled stars */
 }
+.comparison-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.car-select {
+  width: 100%;
+}
+#compareTable img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+#compareTable td{
+  width:45%;
+  padding: 10px;
+  
+  
+}
+
+#compareTable th{
+  width:10%;
+  font-size: 1.6rem;
+  font-family: Poppins;
+  padding: 10px;
+}
+#compareTable tr,#compareTable td{
+  border:1px solid #dfdfdf;
+  
+}

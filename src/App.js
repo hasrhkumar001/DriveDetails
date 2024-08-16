@@ -15,6 +15,7 @@ import { ResetPassword } from "./Pages/ResetPassword";
 import ProfileDetails from "./Pages/ProfileDetails";
 import { AuthProvider } from "./components/AuthContext";
 import Review from "./components/Review";
+import CarComparison from "./Pages/CarComparison";
 
 
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/profile" element={<ProfileDetails />} />
         <Route path="/profile/review" element={<Review />} />
+        <Route path="/cars/compare" element={<CarComparison />} />
       </Routes>
       <Footer />
       </AuthProvider>

@@ -97,6 +97,12 @@ function Navbar() {
             </li> */}
             <li>
               {" "}
+              <Link className="contact-link" to="/cars/compare">
+                Compare Cars
+              </Link>
+            </li>
+            <li>
+              {" "}
               <Link className="contact-link" to="/contact">
                 Contact
               </Link>
