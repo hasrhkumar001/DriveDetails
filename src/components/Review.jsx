@@ -92,9 +92,10 @@ function Review({ carId }) {
             color: "#010103",
             textAlign:"left",
             marginTop: "90px"}}>Reviews</h1>
+            <div className='d-flex'>
       {reviews.map((review) => (
-          <div className='d-flex '>
-        <div key={review.id} className="review border  p-5 m-3 w-100">
+          <div className='d-flex col-4'>
+        <div key={review.id} className="review p-5 m-3 w-100 " style={{border: "1px solid #dfdfdf"}}>
             <div className='d-flex align-items-center'>
                 
                 <h4 style={{
@@ -109,9 +110,10 @@ function Review({ carId }) {
         </div>
         </div>
       ))}
+      </div>
 
       {token ? (
-        <form onSubmit={handleSubmit} style={{marginTop:"50px"}}>
+        <form onSubmit={handleSubmit} className="shadow" style={{marginTop:"50px",padding:"20px" }}>
             <h4 style={{
                 fontSize: "2.4rem",
                 fontFamily: "Poppins"}}>Write a Review</h4>
@@ -150,7 +152,7 @@ function Review({ carId }) {
                 className="btn-lg btn-block w-100 fs-3 py-3 " type="submit">Submit Review</button>
         </form>
       ) : (
-        <p>Login to add rating and reviews</p>
+        <p className='text-center fs-2 text-secondary mt-3'>Login to add rating and reviews</p>
       )}
     </div>
   );

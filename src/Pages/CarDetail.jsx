@@ -69,23 +69,44 @@ const CarDetail = () => {
     };
   
 
+    const formatPriceRange = (priceRange) => {
+      const [minPrice, maxPrice] = priceRange.split('-').map(Number);
+  
+      const formatValue = (value) => {
+        if (value < 1000) return value;
+        if (value >= 1000 && value < 100000) return `${(value / 1000).toFixed(1)}K`;
+        if (value >= 100000 && value < 10000000) return `${(value / 100000).toFixed(1)}L`;
+        if (value >= 10000000) return `${(value / 10000000).toFixed(1)}Cr`;
+      };
+  
+      return `${formatValue(minPrice)} - ${formatValue(maxPrice)}`;
+    };
+
     const formatMileage = (mileage, fuelType) => {
-        if (fuelType === 'PETROL' || fuelType === 'DIESEL') {
-          return `${mileage}Kmpl`;
-        } else if (fuelType === 'ELECTRIC') {
+      const fuelTypesArray = fuelType.split(','); // Split the string into an array
+    
+      // Check if any of the specified fuel types are present
+      if (fuelTypesArray.includes('PETROL') || fuelTypesArray.includes('DIESEL') || fuelTypesArray.includes('HYBRID')) {
+          return `${mileage} Kmpl`;
+        }else if (fuelTypesArray.includes('ELECTRIC')) {
           return `${mileage}Km`;
         }
         return mileage;
       };
     
-    const formatEngineCapacity = (engineCapacity, fuelType) => {
-        if (fuelType === 'PETROL' || fuelType === 'DIESEL') {
-          return `${engineCapacity}cc`;
-        } else if (fuelType === 'ELECTRIC') {
-          return `${engineCapacity}KWh`;
+      const formatEngineCapacity = (engineCapacity, fuelType) => {
+        const fuelTypesArray = fuelType.split(','); // Split the string into an array
+    
+        // Check if any of the specified fuel types are present
+        if (fuelTypesArray.includes('PETROL') || fuelTypesArray.includes('DIESEL') || fuelTypesArray.includes('HYBRID')) {
+            return `${engineCapacity}cc`;
+        } else if (fuelTypesArray.includes('ELECTRIC')) {
+            return `${engineCapacity}KWh`;
         }
+    
         return engineCapacity;
       };
+    
       const handleModelSelect = (selectedModel) => {
         setCars(selectedModel);
     };
@@ -118,7 +139,7 @@ const CarDetail = () => {
                     <Card className='shadow'>
                         <CardContent style={{fontFamily: "Poppins"}}>
                             <Typography variant="h2" component="div" style={{ fontWeight :"700"}} className='d-flex align-items-end justify-content-between mb-3'>
-                              <div>{cars.brand_name} <span style={{color: "#ff4d30"}} >{cars.car_name}</span></div>  <Typography variant="h4" color="text.secondary" gutterBottom>
+                              <div>{`${cars.car ? cars.car.brand : cars.brand_name}`} <span style={{color: "#ff4d30"}} >{`${cars.car ? cars.car.car_name : cars.car_name}`}</span></div>  <Typography variant="h4" color="text.secondary" gutterBottom>
                               <CarModelDropdown  carId={cars.id} onSelectModel={handleModelSelect} />
                             </Typography>
                             {/* Display Average Rating */}
@@ -136,7 +157,7 @@ const CarDetail = () => {
                             
                             <Typography variant="h4" className='mt-4 ' paragraph>
                                 <i className="bx bx-dollar  mx-2 fs-1 " style={{fontWeight : "normal"}}></i>
-                                Price: <strong>&#x20b9;{cars.car_price}</strong>
+                                Price: <strong>&#x20b9;{formatPriceRange(`${cars.car ? cars.car_price : cars.car_price_range}`)}</strong>
                             </Typography>
                             <Typography variant="h4"  paragraph>
                                 <i className="bx bx-cog mx-2 fs-1"></i>

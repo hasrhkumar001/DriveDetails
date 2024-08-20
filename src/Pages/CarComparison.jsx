@@ -160,7 +160,7 @@ function CarComparison() {
               <option value="">Select Car 1</option>
               {cars.map((car) => (
                 <option key={car.id} value={car.id}>
-                  {car.car_name}
+                  {car.brand} {car.car_name}
                 </option>
               ))}
             </select>
@@ -178,7 +178,7 @@ function CarComparison() {
               <option value="">Select Car 2</option>
               {cars.map((car) => (
                 <option key={car.id} value={car.id}>
-                  {car.car_name}
+                 {car.brand} {car.car_name}
                 </option>
               ))}
             </select>
