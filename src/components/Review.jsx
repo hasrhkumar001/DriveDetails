@@ -36,7 +36,7 @@ function Review({ carId }) {
     }
 
     try {
-      await axios.post(
+      const response = await axios.post(
         'http://127.0.0.1:8000/api/reviews',
         { rating, review,reviewHeading, car_id: carId },
         {
@@ -45,6 +45,9 @@ function Review({ carId }) {
           },
         }
       );
+      if (response.status !== 200){
+      setErrors({reviewFetch:'Login Again, Token Expired'});
+    }
 
       setRating('');
       setReview('');
@@ -114,12 +117,15 @@ function Review({ carId }) {
 
       {token ? (
         <form onSubmit={handleSubmit} className="shadow" style={{marginTop:"50px",padding:"20px" }}>
+          
+
             <h4 style={{
                 fontSize: "2.4rem",
                 fontFamily: "Poppins"}}>Write a Review</h4>
             <div className='d-flex justify-content-center flex-column'>
             
             <StarRating rating={rating} setRating={setRating} />
+            {errors.reviewFetch && <p>{errors.reviewFetch}</p>}
             {errors.rating && <p>{errors.rating}</p>}
           </div>
             

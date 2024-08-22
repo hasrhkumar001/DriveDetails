@@ -37,11 +37,12 @@ function BookCar() {
           fuel_type: fuelType,
           engine_capacity: engineCapacity,
           car_mileage: mileage,
-          car_price: priceRange,
+          car_price_range: priceRange,
           brand: brand,
         },
         headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the headers
+          Authorization: `Bearer ${token}`,// Include the token in the headers
+          Accept:`application/json` ,
         },
       });
       setCars(response.data.data); // Adjust based on your API response structure
@@ -70,9 +71,11 @@ function BookCar() {
                   </label>
                   <select value={fuelType} onChange={(e) => setFuelType(e.target.value)}>
                     <option value="">Select Fuel type</option>
-                    <option value="PETROL">Petrol</option>
-                    <option value="DIESEL">Diesel</option>
-                    <option value="ELECTRIC">Electric</option>
+                    <option value="Petrol">Petrol</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="CNG">CNG</option>
+                    <option value="Electric">Electric</option>
+                    <option value="Hybrid">Hybrid</option>
                   </select>
                   {errors.fuelType && <p className="error-message">{errors.fuelType}</p>}
                 </div>
@@ -82,21 +85,21 @@ function BookCar() {
                     <i className="fa-solid fa-location-dot"></i> &nbsp; Select Engine/Motor Capacity <b></b>
                   </label>
                   <select value={engineCapacity} onChange={(e) => setEngineCapacity(e.target.value)}>
-                    {fuelType === 'ELECTRIC' ? (
+                    {fuelType === 'Electric' ? (
                       <>
                         <option value="">Select Battery Capacity</option>
-                        <option value="0,30">Less than 30KWh</option>
-                        <option value="30,50">30KWh - 50KWh</option>
-                        <option value="50,70">50KWh - 70KWh</option>
-                        <option value="70,1000000">Above 70KWh</option>
+                        <option value="0-30">Less than 30KWh</option>
+                        <option value="30-50">30KWh - 50KWh</option>
+                        <option value="50-70">50KWh - 70KWh</option>
+                        <option value="70-1000000">Above 70KWh</option>
                       </>
                     ) : (
                       <>
                         <option value="">Select Engine Capacity</option>
-                        <option value="0,1000">Less than 1000cc</option>
-                        <option value="1001,2000">1001cc - 2000cc</option>
-                        <option value="2001,3000">2001cc - 3000cc</option>
-                        <option value="3001,1000000">Above 3000cc</option>
+                        <option value="0-1000">Less than 1000cc</option>
+                        <option value="1001-2000">1001cc - 2000cc</option>
+                        <option value="2001-3000">2001cc - 3000cc</option>
+                        <option value="3001-1000000">Above 3000cc</option>
                       </>
                     )}
                   </select>
@@ -108,24 +111,24 @@ function BookCar() {
                     <i className="fa-solid fa-location-dot"></i> &nbsp; Select Mileage/Range <b></b>
                   </label>
                   <select value={mileage} onChange={(e) => setMileage(e.target.value)}>
-                  {fuelType !== 'ELECTRIC' ? (
+                  {fuelType !== 'Electric' ? (
                     <>
                     <option value="">Select Mileage</option>
-                    <option value="0,10">Less than 10kmpl</option>
-                    <option value="10,15">10kmpl - 15kmpl</option>
-                    <option value="15,20">15kmpl - 20kmpl</option>
-                    <option value="20,25">20kmpl - 25kmpl</option>
-                    <option value="25,1000">Above 25kmpl</option>
+                    <option value="0-10">Less than 10kmpl</option>
+                    <option value="10-15">10kmpl - 15kmpl</option>
+                    <option value="15-20">15kmpl - 20kmpl</option>
+                    <option value="20-25">20kmpl - 25kmpl</option>
+                    <option value="25-1000">Above 25kmpl</option>
                     </>
                   ):(
                     <>
                     <option value="">Select Range</option>
-                    <option value="0,200">Less than 200km</option>
-                    <option value="200,300">200km - 300km</option>
-                    <option value="300,400">300km - 400km</option>
-                    <option value="400,500">400km - 500km</option>
-                    <option value="500,600">500km - 600km</option>
-                    <option value="600,10000">Above 600km</option>
+                    <option value="0-200">Less than 200km</option>
+                    <option value="200-300">200km - 300km</option>
+                    <option value="300-400">300km - 400km</option>
+                    <option value="400-500">400km - 500km</option>
+                    <option value="500-600">500km - 600km</option>
+                    <option value="600-10000">Above 600km</option>
                   
                   </>
                   )}
@@ -139,17 +142,17 @@ function BookCar() {
                   </label>
                   <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)}>
                     <option value="">Select Price Range</option>
-                    <option value="0,1000000">Less than 10L</option>
-                    <option value="1000000,2000000">10L - 20L</option>
-                    <option value="2000000,3000000">20L - 30L</option>
-                    <option value="3000000,4000000">30L - 40L</option>
-                    <option value="4000000,5000000">40L - 50L</option>
-                    <option value="5000000,6000000">50L - 60L</option>
-                    <option value="6000000,7000000">60L - 70L</option>
-                    <option value="7000000,8000000">70L - 80L</option>
-                    <option value="8000000,9000000">80L - 90L</option>
-                    <option value="9000000,10000000">90L - 1Cr</option>
-                    <option value="10000000,100000000">Above 1Cr</option>
+                    <option value="0-1000000">Less than 10L</option>
+                    <option value="1000000-2000000">10L - 20L</option>
+                    <option value="2000000-3000000">20L - 30L</option>
+                    <option value="3000000-4000000">30L - 40L</option>
+                    <option value="4000000-5000000">40L - 50L</option>
+                    <option value="5000000-6000000">50L - 60L</option>
+                    <option value="6000000-7000000">60L - 70L</option>
+                    <option value="7000000-8000000">70L - 80L</option>
+                    <option value="8000000-9000000">80L - 90L</option>
+                    <option value="9000000-10000000">90L - 1Cr</option>
+                    <option value="10000000-100000000">Above 1Cr</option>
                   </select>
                   {errors.priceRange && <p className="error-message">{errors.priceRange}</p>}
                 </div>
@@ -177,7 +180,7 @@ function BookCar() {
                     <option value="MG">MG</option>
                     <option value="NISSAN">NISSAN</option>
                     <option value="ROLLS-ROYCE">ROLLS-ROYCE</option>
-                    <option value="SUZUKI">SUZUKI</option>
+                    <option value="MARUTI SUZUKI" >MARUTI SUZUKI</option>
                     <option value="SKODA">SKODA</option>
                     <option value="TATA">TATA</option>
                     <option value="TOYOTA">TOYOTA</option>

@@ -157,7 +157,7 @@ const CarDetail = () => {
                             
                             <Typography variant="h4" className='mt-4 ' paragraph>
                                 <i className="bx bx-dollar  mx-2 fs-1 " style={{fontWeight : "normal"}}></i>
-                                Price: <strong>&#x20b9;{formatPriceRange(`${cars.car ? cars.car_price : cars.car_price_range}`)}</strong>
+                                Price: <strong>&#x20b9;{`${cars.car ? cars.car_price : formatPriceRange(cars.car_price_range)}`}</strong>
                             </Typography>
                             <Typography variant="h4"  paragraph>
                                 <i className="bx bx-cog mx-2 fs-1"></i>

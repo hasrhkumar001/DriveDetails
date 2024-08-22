@@ -94,9 +94,13 @@ function Models() {
                       <div className="models-div__box__descr__name-price__price text-center">
                         <h4 className="fs-2 fw-bold">&#x20b9;{formatPriceRange(car.car_price_range)}</h4>
                       </div>
-                      <div className="models-div__box__descr__name-price__details d-flex flex-column align-items-center">
-                        <span>{car.transmission_type}</span>
-                        <span>{car.fuel_type}&nbsp;</span>
+                      <div className="models-div__box__descr__name-price__details  d-flex flex-column align-items-center justify-content-center row-gap-2 ">
+                      <span className="d-flex align-items-center ">
+                              <i
+                                className="bx bx-cog mx-2 fs-1 "
+                                style={{ color: "grey" }}
+                              ></i>{car.transmission_type}</span>
+                        <span className="d-flex align-items-center"> <i className="bx bx-gas-pump mx-2 fs-1" style={{ color: "grey" }}></i>{car.fuel_type}&nbsp;</span>
                       </div>
                       <Link className="text-white text-decoration-none fw-bold" onClick={() => window.scrollTo(0, 0)} to={`/cars/${car.id}`}>
                         <div className="models-div__box__descr__name-price__btn">

@@ -6,6 +6,25 @@ import BookCar from '../components/BookCar';
 const SearchResults = () => {
   const location = useLocation();
   const { cars } = location.state || { cars: [] };
+  const formatPriceRange = (range) => {
+    const [minPrice, maxPrice] = range.split('-').map(Number);
+    
+    const formatValue = (value) => {
+      if (value < 1000) {
+        return value; // No suffix needed for values below 1000
+      }
+      
+      if (value >= 10000000) {
+        return `${(value / 10000000).toFixed(1)}C`; // Crore
+      } else if (value >= 100000) {
+        return `${(value / 100000).toFixed(1)}L`; // Lakh
+      } else if (value >= 1000) {
+        return `${(value / 1000).toFixed(1)}K`; // Thousand
+      }
+    };
+
+    return `${formatValue(minPrice)} - ${formatValue(maxPrice)}`;
+  };
   
   
 
@@ -44,17 +63,23 @@ const SearchResults = () => {
                     style={{objectFit:"contain"}}
                   />
                   <div className="models-div__box__descr">
-                    <div className="models-div__box__descr__name-price d-flex justify-content-between align-items-baseline">
+                    <div className="models-div__box__descr__name-price d-flex justify-content-center flex-wrap">
                       <div className="models-div__box__descr__name-price__name">
-                        <p className="fs-1">{car.brand} {car.car_name}</p>
+                        <p className="fs-1 text-center">{car.brand} {car.car_name}</p>
                       </div>
-                      <div className="models-div__box__descr__name-price__price">
-                        <h4 className="fs-1 fw-bold">&#x20b9;{car.car_price}</h4>
-                      </div>
+                      
                     </div>
-                    <div className="models-div__box__descr__name-price__details d-flex justify-content-between align-items-baseline">
-                      <span>&nbsp; {car.transmission_type}</span>
-                      <span style={{ textAlign: "right" }}>
+                    <div className="models-div__box__descr__name-price__price text-center">
+                        <h4 className="fs-1 fw-bold">&#x20b9;{formatPriceRange(car.car_price_range)}</h4>
+                      </div>
+                    
+                    <div className="models-div__box__descr__name-price__details d-flex flex-column align-items-center justify-content-center row-gap-2 ">
+                    <span className="d-flex align-items-center ">
+                              <i
+                                className="bx bx-cog mx-2 fs-1 "
+                                style={{ color: "grey" }}
+                              ></i> {car.transmission_type}</span>
+                       <span className="d-flex align-items-center"> <i className="bx bx-gas-pump mx-2 fs-1" style={{ color: "grey" }}></i>
                         {car.fuel_type} &nbsp;{" "}
                         <i className="fa-solid fa-car-side"></i>
                       </span>

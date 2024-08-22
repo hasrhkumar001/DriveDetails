@@ -10,7 +10,17 @@ function CarComparison() {
   const [selectedCar1Model, setSelectedCar1Model] = useState(null);
   const [selectedCar2, setSelectedCar2] = useState(null);
   const [selectedCar2Model, setSelectedCar2Model] = useState(null);
+  const [showComparison, setShowComparison] = useState(false);
+
   const token = localStorage.getItem("authToken");
+  useEffect(() => {
+    // Check if both selected models are available, then show the comparison table
+    if (selectedCar1Model && selectedCar2Model) {
+      setShowComparison(true);
+    } else {
+      setShowComparison(false);
+    }
+  }, [selectedCar1Model, selectedCar2Model]);
 
   // Fetch the list of cars
   useEffect(() => {
@@ -37,6 +47,7 @@ function CarComparison() {
     const car = cars.find((car) => car.id === parseInt(carId));
     setSelectedCar1(car);
     setSelectedCar1Model(null);
+    setShowComparison(false);
 
     try {
       const response = await axios.get(
@@ -72,6 +83,7 @@ function CarComparison() {
     const car = cars.find((car) => car.id === parseInt(carId));
     setSelectedCar2(car);
     setSelectedCar2Model(null);
+    setShowComparison(false);
 
     try {
       const response = await axios.get(
@@ -233,8 +245,7 @@ function CarComparison() {
                   )}
                 </select>
               </div>
-
-              {selectedCar1Model && selectedCar2Model && (
+              {showComparison &&(
                 <div>
                   <table id="compareTable">
                     <tr>
