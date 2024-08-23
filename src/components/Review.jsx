@@ -7,6 +7,8 @@ function Review({ carId }) {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState('');
   const [review, setReview] = useState('');
+  const [reviewExist, setReviewExist] = useState('')
+  const [reviewFetch, setReviewFetch] = useState('')
   const [reviewHeading, setReviewHeading] = useState('');
   const [errors, setErrors] = useState({});
   const token = localStorage.getItem('authToken');
@@ -30,8 +32,8 @@ function Review({ carId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!rating || !review) {
-      setErrors({ rating: 'Rating is required', review: 'Review is required' });
+    if (!rating || !review || !reviewHeading || !reviewHeading || !reviewExist) {
+      setErrors({ rating: 'Rating is required', review: 'Review is required',reviewHeading: 'Review is required',reviewExist:'You have already reviewed this car',reviewFetch:'Login Again, Token Expired' });
       return;
     }
 
@@ -45,7 +47,11 @@ function Review({ carId }) {
           },
         }
       );
-      if (response.status !== 200){
+      if (response.status === 200){
+      
+    }else if(response.status === 403){
+      setErrors({reviewExist:'You have already reviewed this car'});
+    }else{
       setErrors({reviewFetch:'Login Again, Token Expired'});
     }
 
@@ -125,8 +131,9 @@ function Review({ carId }) {
             <div className='d-flex justify-content-center flex-column'>
             
             <StarRating rating={rating} setRating={setRating} />
-            {errors.reviewFetch && <p>{errors.reviewFetch}</p>}
-            {errors.rating && <p>{errors.rating}</p>}
+            {errors.reviewFetch && <p className="fs-5 text-danger">{errors.reviewFetch}</p>}
+            {errors.reviewExist && <p className="fs-5 text-danger">{errors.reviewExist}</p>}
+            {errors.rating && <p className="fs-5 text-danger">{errors.rating}</p>}
           </div>
             
           
@@ -139,7 +146,7 @@ function Review({ carId }) {
               style={{padding:"10px", marginBottom:"5px" ,fontSize:"14px" ,border: "1px solid #dfdfdf"}}
               onChange={(e) => setReviewHeading(e.target.value)}
             ></textarea>
-            {errors.reviewHeading && <p className="error-message">{errors.reviewHeading}</p>}
+            {errors.reviewHeading && <p className="fs-5 text-danger">{errors.reviewHeading}</p>}
           </div>
 
           <div className='d-flex justify-content-center flex-column'>
@@ -151,7 +158,7 @@ function Review({ carId }) {
               placeholder='Share details of your own experience'
               onChange={(e) => setReview(e.target.value)}
             ></textarea>
-            {errors.review && <p className="error-message">{errors.review}</p>}
+            {errors.review && <p className="fs-5 text-danger">{errors.review}</p>}
           </div>
 
           <button style={{backgroundColor: "#ff4d30" ,border:"none" ,color:"white",fontWeight:"700"}}

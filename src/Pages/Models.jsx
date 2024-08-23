@@ -88,11 +88,11 @@ function Models() {
                     <div className="models-div__box__descr">
                       <div className="models-div__box__descr__name-price d-flex justify-content-center">
                         <div className="models-div__box__descr__name-price__name">
-                          <p className="fs-2 text-center">{car.brand} {car.car_name}</p>
+                          <p className=" text-center">{car.brand} {car.car_name}</p>
                         </div>
                       </div>
                       <div className="models-div__box__descr__name-price__price text-center">
-                        <h4 className="fs-2 fw-bold">&#x20b9;{formatPriceRange(car.car_price_range)}</h4>
+                        <h4 className=" fw-bold">&#x20b9;{formatPriceRange(car.car_price_range)}</h4>
                       </div>
                       <div className="models-div__box__descr__name-price__details  d-flex flex-column align-items-center justify-content-center row-gap-2 ">
                       <span className="d-flex align-items-center ">

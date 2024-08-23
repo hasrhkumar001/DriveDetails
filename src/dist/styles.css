@@ -2134,13 +2134,13 @@ footer {
 
 
 .models-div__box__descr__name-price__name p {
-  font-size: 1.25rem; /* Larger font size */
+  font-size: 2.75rem; /* Larger font size */
   color: #333; /* Darker text color */
   margin: 0; /* Remove default margin */
 }
 
 .models-div__box__descr__name-price__price h4 {
-  font-size: 1.5rem; /* Larger font size */
+  font-size: 2rem; /* Larger font size */
   color: #000; /* Darker text color */
 }
 
@@ -2171,4 +2171,45 @@ footer {
 
 .models-div__box:hover {
   transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.car-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.car-image {
+  width: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.custom-carousel .carousel-control-prev,
+.custom-carousel .carousel-control-next {
+    width: 60px;
+    
+}
+
+.custom-carousel .carousel-control-prev-icon,
+.custom-carousel .carousel-control-next-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 30%;
+    
+    
+}
+.navbar, .mobile-navbar  {
+  z-index:100;
+}
+.footerlink li{
+  cursor:pointer;
+}
+.footerlink li:hover{
+  color:#ff4d30;
+}
+.footer-content{
+  font-weight: 500;
 }

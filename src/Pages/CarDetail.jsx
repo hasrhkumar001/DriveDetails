@@ -9,6 +9,7 @@ import { Container, Grid, Card, CardMedia, CardContent, Typography, Button, List
 import CircularProgress from '@mui/material/CircularProgress';
 import Review from '../components/Review';
 import CarModelDropdown from '../components/CarModelDropdown';
+import CarImages from '../components/CarImages';
 
 const CarDetail = () => {
     let [cars, setCars] = useState({});
@@ -86,9 +87,9 @@ const CarDetail = () => {
       const fuelTypesArray = fuelType.split(','); // Split the string into an array
     
       // Check if any of the specified fuel types are present
-      if (fuelTypesArray.includes('PETROL') || fuelTypesArray.includes('DIESEL') || fuelTypesArray.includes('HYBRID')) {
+      if (fuelTypesArray.includes('Petrol') || fuelTypesArray.includes('Diesel') || fuelTypesArray.includes('Hybrid') || fuelTypesArray.includes('CNG')) {
           return `${mileage} Kmpl`;
-        }else if (fuelTypesArray.includes('ELECTRIC')) {
+        }else if (fuelTypesArray.includes('Electric')) {
           return `${mileage}Km`;
         }
         return mileage;
@@ -98,9 +99,9 @@ const CarDetail = () => {
         const fuelTypesArray = fuelType.split(','); // Split the string into an array
     
         // Check if any of the specified fuel types are present
-        if (fuelTypesArray.includes('PETROL') || fuelTypesArray.includes('DIESEL') || fuelTypesArray.includes('HYBRID')) {
+        if (fuelTypesArray.includes('Petrol') || fuelTypesArray.includes('Diesel') || fuelTypesArray.includes('Hybrid') || fuelTypesArray.includes('CNG')) {
             return `${engineCapacity}cc`;
-        } else if (fuelTypesArray.includes('ELECTRIC')) {
+        } else if (fuelTypesArray.includes('Electric')) {
             return `${engineCapacity}KWh`;
         }
     
@@ -123,20 +124,21 @@ const CarDetail = () => {
                 
               </p>
             ) : (
-            <Grid container spacing={3} className="d-flex align-items-center">
+            <Grid container spacing={3} className="d-flex align-items-center  px-3 py-5 mb-5">
                 <Grid item md={6}>
                     
-                        <CardMedia
+                        {/* <CardMedia
                             component="img"
                             
                             image={`http://127.0.0.1:8000/public/photos/${cars.car ? cars.car.car_img : cars.car_img}`}
                             
-                        />
+                        /> */}
+                        <CarImages carId={`${cars.car ?cars.car_id : cars.id}`}/>
                         
                    
                 </Grid>
                 <Grid item md={6}>
-                    <Card className='shadow'>
+                    <Card className=''>
                         <CardContent style={{fontFamily: "Poppins"}}>
                             <Typography variant="h2" component="div" style={{ fontWeight :"700"}} className='d-flex align-items-end justify-content-between mb-3'>
                               <div>{`${cars.car ? cars.car.brand : cars.brand_name}`} <span style={{color: "#ff4d30"}} >{`${cars.car ? cars.car.car_name : cars.car_name}`}</span></div>  <Typography variant="h4" color="text.secondary" gutterBottom>

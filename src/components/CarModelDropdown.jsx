@@ -53,18 +53,18 @@ const CarModelDropdown = ({ carId, onSelectModel }) => {
   return (
     <>
       <FormControl fullWidth>
-        <InputLabel id="car-model-select-label">Model</InputLabel>
+        <InputLabel id="car-model-select-label" style={{fontSize:"12px"}}>Select Model</InputLabel>
         <Select
           labelId="car-model-select-label"
           id="car-model-select"
           value={selectedModel}
           label="Model"
-          style={{ width: "150px" }}
+          style={{ width: "150px" ,fontWeight:"bolder",fontSize:"12px"}}
           onChange={handleModelChange}
         >
           {carModels.length > 0 ? (
             carModels.map((model) => (
-              <MenuItem key={model.id} value={model.id}>
+              <MenuItem className="fs-5" key={model.id} value={model.id}>
                 {model.model_name}
               </MenuItem>
             ))
